@@ -1,0 +1,17 @@
+language: java
+before_install:
+  - chmod +x gradlew
+script:
+  - ./gradlew build --info
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+deploy:
+  provider: heroku
+  api_key: 7f17abf3-2643-4c7d-8bd4-282f8e40c22e
+  app: goingwiththeflowservlet
+  skip_cleanup: true
