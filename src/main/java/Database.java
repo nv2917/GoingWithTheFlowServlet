@@ -1,10 +1,11 @@
 import javax.print.DocFlavor;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
     Connection conn;
-    private String result;
+    ArrayList<Patient> patients=new ArrayList<Patient>() ;
 
     public Database() { }
 
@@ -43,7 +44,12 @@ public class Database {
             Statement s = conn.createStatement();
             ResultSet rset = s.executeQuery(command);
             while(rset.next()) {
-                result = rset.getInt("id")+" "+ rset.getString("familyname")+" "+ rset.getString("givenname");
+                Patient p = new Patient(rset.getInt("id"),rset.getString("nameinitials"),rset.getString("currentlocation"),
+                        rset.getString("sex"),rset.getTime("arrivaltime"),rset.getString("initaldiagnosis"),
+                        rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),rset.getString("nextdestination"),
+                        rset.getTime("estimatedtimeofnext"),rset.getBoolean("ttasignedoff"),rset.getBoolean("suitablefordischargeloounge"),rset.getString("transferrequeststatus"),
+                        rset.getBoolean("deceased"));
+                patients.add(p);
             }
             rset.close();
             s.close();
@@ -56,8 +62,7 @@ public class Database {
         conn.close();
     }
 
-
-    public String getResult() {
-        return result;
+    public ArrayList<Patient> getPatientsArray() {
+        return patients;
     }
 }
