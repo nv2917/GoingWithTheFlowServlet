@@ -22,8 +22,8 @@ public class GoingWithTheFlowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Gson gson = new Gson();
-        resp.setContentType("application/html");
+        //Gson gson = new Gson();
+        resp.setContentType("text/html");
         resp.getWriter().write("hi");
         /*try {
             db.connect();
