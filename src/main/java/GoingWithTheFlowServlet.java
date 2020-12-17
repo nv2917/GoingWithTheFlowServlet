@@ -14,11 +14,10 @@ import java.util.stream.Collectors;
 @WebServlet(urlPatterns = {"/home"},loadOnStartup = 1)
 public class GoingWithTheFlowServlet extends HttpServlet {
 
-    DatabaseController db;
+    DatabaseController db =  new DatabaseController();
 
 
     public GoingWithTheFlowServlet() {
-        db = new DatabaseController();
     }
 
     @Override
