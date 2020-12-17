@@ -32,8 +32,8 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             resp.getWriter().println(gson.toJson(jsonStrings));
             db.disconnect();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();*/
-        }
+            throwables.printStackTrace();
+        }*/
     }
 
     @Override
