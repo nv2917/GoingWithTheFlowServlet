@@ -24,7 +24,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Gson gson = new Gson();
         resp.setContentType("text/html");
-        resp.getWriter().write("hi");
+        resp.getWriter().write(req.getParameter("table"));
         /*try {
             db.connect();
             ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("where"));
