@@ -8,31 +8,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/home"},loadOnStartup = 1)
 public class GoingWithTheFlowServlet extends HttpServlet {
 
-    Database db;
+    DatabaseController db;
+
 
     public GoingWithTheFlowServlet() {
-        db = new Database();
+        db = new DatabaseController();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         Gson gson = new Gson();
-        resp.setContentType("application/html");
         try {
             db.connect();
-            db.executeSelect(reqBody);
-            resp.getWriter().write("Thank you client!! \nYour request:\n"+reqBody+"\nhas been executed successfully!");
-            ArrayList<Patient> patients = db.getPatientsArray();
-            String jsonString = gson.toJson(patients);
+            ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("where"));
             resp.setContentType("application/json");
-            resp.getWriter().write(jsonString);
-            db.close();
+            resp.getWriter().println(gson.toJson(jsonStrings));
+            db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -45,8 +42,8 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         try {
             db.connect();
             db.executeInsert(reqBody);
-            resp.getWriter().write("Thank you client!! \nYour request:\n"+reqBody+"\nhas been executed successfully!");
-            db.close();
+            resp.getWriter().write("Thank you client!! \nYour POST request:\n"+reqBody+"\nhas been executed successfully!");
+            db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -60,7 +57,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             db.connect();
             db.executeDelete(reqBody);
             resp.getWriter().write("Thank you client!! \nYour request:\n"+reqBody+"\nhas been executed successfully!");
-            db.close();
+            db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
