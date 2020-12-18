@@ -21,11 +21,11 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     /*Upon receiving a doGet request from the client app it uses the methods of the Databases controller object db to:
         1)connects to the database
         2)executes a database search based on the parameters provided as key-value pairs at the end of the URL
-        3)creates an array of strings containing JSON strings (coding Patient objects)
+        3)creates an arraylist of strings containing JSON strings (coding Patient objects)
         4)disconnects from database
-        5)codes the array of strings using JSON and responds to the client by writing the JSON string in the response body*/
+        5)codes the arraylist of strings using JSON and responds to the client by writing the JSON string in the response body*/
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Gson gson = new Gson();
         try {
             db.connect();
@@ -40,7 +40,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         resp.setContentType("application/html");
         try {
@@ -54,7 +54,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         resp.setContentType("application/html");
         try{

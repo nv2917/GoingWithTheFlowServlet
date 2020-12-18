@@ -1,14 +1,12 @@
 import com.google.gson.Gson;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class DatabaseController {
 
     private Connection conn;
 
-    public DatabaseController() {
-    }
+    public DatabaseController() { }
 
     /*establishes a connection to the Heroku database using the database credentials*/
     public void connect() throws SQLException {
@@ -16,8 +14,7 @@ public class DatabaseController {
         try {
             // Registers the driver
             Class.forName("org.postgresql.Driver");
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {e.printStackTrace(); }
         conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
     }
 
@@ -26,8 +23,7 @@ public class DatabaseController {
             Statement s = conn.createStatement();
             s.execute(command);
             s.close();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {e.printStackTrace(); }
     }
 
     public void executeDelete(String command) {
@@ -35,8 +31,7 @@ public class DatabaseController {
             Statement s = conn.createStatement();
             s.execute(command);
             s.close();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     /* 1)Creates an SQL SELECT query as a string to which it passes the search parameters (fields,table,where)
@@ -49,10 +44,10 @@ public class DatabaseController {
      */
 
     public ArrayList<String> executeSelect(String fields, String table, String criteria) {
-        ArrayList<String> jsonStrings = new ArrayList<String>();
+        ArrayList<String> jsonStrings = new ArrayList<>();
         Gson gson = new Gson();
         try {
-            String sqlQr = "SELECT " + fields + " from " + table + " where " + criteria + ";";
+            String sqlQr = "select " + fields + " from " + table + " where " + criteria + ";";
             Statement s = conn.createStatement();
             ResultSet rset = s.executeQuery(sqlQr);
             while (rset.next()) {
@@ -67,8 +62,7 @@ public class DatabaseController {
             }
             rset.close();
             s.close();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {e.printStackTrace();}
         return jsonStrings;
     }
 
