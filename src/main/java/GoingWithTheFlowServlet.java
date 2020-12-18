@@ -22,10 +22,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Gson gson = new Gson();
-        resp.setContentType("text/html");
-        resp.getWriter().write(req.getParameter("table")+req.getParameter("fields"));
-        /*try {
+        Gson gson = new Gson();
+        //resp.setContentType("text/html");
+        //resp.getWriter().write(req.getParameter("table")+req.getParameter("fields"));
+        try {
             db.connect();
             ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("where"));
             resp.setContentType("application/json");
@@ -33,7 +33,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }*/
+        }
     }
 
     @Override
