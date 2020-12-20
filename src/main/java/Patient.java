@@ -1,6 +1,6 @@
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+
 import java.time.LocalDateTime;
 
 public class Patient implements Serializable {

@@ -1,6 +1,10 @@
 import com.google.gson.Gson;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class DatabaseController {
 
@@ -55,9 +59,9 @@ public class DatabaseController {
             while (rset.next()) {
                  Patient p = new Patient(rset.getInt("id"),rset.getString("nameinitials"),
                         rset.getString("currentlocation"),rset.getString("sex"),
-                        rset.getTimestamp("arrivaldatetime").toLocalDateTime(),rset.getString("initialdiagnosis"),
+                        rset.getTimestamp("arrivaldatetime",Calendar.getInstance()).toLocalDateTime(),rset.getString("initialdiagnosis"),
                         rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),
-                        rset.getString("nextdestination"),rset.getTimestamp("estimatedtimeofnext").toLocalDateTime(),
+                        rset.getString("nextdestination"),rset.getTimestamp("estimatedtimeofnext",Calendar.getInstance()).toLocalDateTime(),
                         rset.getBoolean("ttasignedoff"), rset.getBoolean("suitablefordischargelounge"),
                         rset.getString("transferrequeststatus"),rset.getBoolean("deceased"));
                 jsonStrings.add(gson.toJson(p));
