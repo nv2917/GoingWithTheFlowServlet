@@ -50,7 +50,7 @@ public class Patient implements Serializable {
     public String getNameInitials() {return nameInitials;}
     public String getCurrentLocation() {return currentLocation;}
     public String getSex() {return sex;}
-    public Timestamp getArrivalDateTimeTime() {return arrivalDateTime;}
+    public Timestamp getArrivalDateTime() {return arrivalDateTime;}
     public String getInitialDiagnosis() {return initialDiagnosis;}
     public boolean getNeedsSideRoom() {return needsSideRoom;}
     public boolean getAcceptedByMedicine() {return acceptedByMedicine;}
