@@ -43,10 +43,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         resp.setContentType("application/html");
+        Gson gson = new Gson();
         try {
             db.connect();
-            db.executeInsert(reqBody);
-            resp.getWriter().write("Thank you client!! \nYour POST request:\n"+reqBody+"\nhas been executed successfully!");
+            db.executeInsertPatient(gson.fromJson(reqBody,Patient.class));
             db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

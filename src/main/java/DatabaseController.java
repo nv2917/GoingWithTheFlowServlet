@@ -18,12 +18,14 @@ public class DatabaseController {
         conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
     }
 
-    public void executeInsert(String command) {
+    public void executeInsertPatient(Patient p) {
         try {
+            String sqlQuery = "INSERT INTO patients (nameinitials,sex,initialdiagnosis,needssideroom) values ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
             Statement s = conn.createStatement();
-            s.execute(command);
+            s.execute(sqlQuery);
             s.close();
         } catch (Exception e) {e.printStackTrace(); }
+
     }
 
     public void executeDelete(String command) {
@@ -53,9 +55,9 @@ public class DatabaseController {
             while (rset.next()) {
                  Patient p = new Patient(rset.getInt("id"),rset.getString("nameinitials"),
                         rset.getString("currentlocation"),rset.getString("sex"),
-                        rset.getTime("arrivaltime"),rset.getString("initialdiagnosis"),
+                        rset.getTimestamp("arrivaldatetime"),rset.getString("initialdiagnosis"),
                         rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),
-                        rset.getString("nextdestination"),rset.getTime("estimatedtimeofnext"),
+                        rset.getString("nextdestination"),rset.getTimestamp("estimatedtimeofnext"),
                         rset.getBoolean("ttasignedoff"), rset.getBoolean("suitablefordischargelounge"),
                         rset.getString("transferrequeststatus"),rset.getBoolean("deceased"));
                 jsonStrings.add(gson.toJson(p));
