@@ -1,6 +1,7 @@
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Patient implements Serializable {
 
@@ -8,12 +9,12 @@ public class Patient implements Serializable {
     private String nameInitials;
     private String currentLocation;
     private String sex;
-    private Timestamp arrivalDateTime;
+    private LocalDateTime arrivalDateTime;
     private String initialDiagnosis;
     private boolean needsSideRoom;
     private boolean acceptedByMedicine;
     private String nextDestination;
-    private Timestamp estimatedDateTimeOfNext;
+    private LocalDateTime estimatedDateTimeOfNext;
     private boolean ttaSignedOff;
     private boolean suitableForDischargeLounge;
     private String transferRequestStatus;
@@ -21,20 +22,19 @@ public class Patient implements Serializable {
 
     public Patient(String nameInitials,String sex,String initialDiagnosis,boolean needsSideRoom) {
         this.nameInitials = nameInitials;
-        this.currentLocation = "A&E";
         this.sex = sex;
         this.initialDiagnosis = initialDiagnosis;
         this.needsSideRoom = needsSideRoom;
     }
 
-    public Patient(int id, String nameInitials,String currentLocation,String sex,Timestamp arrivalTime, String initialDiagnosis,
-                   boolean needsSideRoom,boolean acceptedByMedicine,String nextDestination,Timestamp estimatedTimeOfNext,
+    public Patient(int id, String nameInitials,String currentLocation,String sex,LocalDateTime arrivalDateTime, String initialDiagnosis,
+                   boolean needsSideRoom,boolean acceptedByMedicine,String nextDestination,LocalDateTime estimatedTimeOfNext,
                    boolean ttaSignedOff,boolean suitableForDischargeLounge,String transferRequestStatus,boolean deceased) {
         this.id = id;
         this.nameInitials = nameInitials;
         this.currentLocation = currentLocation;
         this.sex = sex;
-        this.arrivalDateTime = arrivalTime;
+        this.arrivalDateTime = arrivalDateTime;
         this.initialDiagnosis = initialDiagnosis;
         this.needsSideRoom = needsSideRoom;
         this.acceptedByMedicine = acceptedByMedicine;
@@ -50,12 +50,12 @@ public class Patient implements Serializable {
     public String getNameInitials() {return nameInitials;}
     public String getCurrentLocation() {return currentLocation;}
     public String getSex() {return sex;}
-    public Timestamp getArrivalDateTime() {return arrivalDateTime;}
+    public LocalDateTime getArrivalDateTime() {return arrivalDateTime;}
     public String getInitialDiagnosis() {return initialDiagnosis;}
     public boolean getNeedsSideRoom() {return needsSideRoom;}
     public boolean getAcceptedByMedicine() {return acceptedByMedicine;}
     public String getNextDestination() {return nextDestination;}
-    public Timestamp getEstimatedTimeOfNext() {return estimatedDateTimeOfNext;}
+    public LocalDateTime getEstimatedTimeOfNext() {return estimatedDateTimeOfNext;}
     public boolean getTtaSignedOff() {return ttaSignedOff;}
     public boolean getSuitableForDischargeLounge() {return suitableForDischargeLounge;}
     public String getTransferRequestStatus() {return transferRequestStatus;}

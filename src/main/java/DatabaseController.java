@@ -55,9 +55,9 @@ public class DatabaseController {
             while (rset.next()) {
                  Patient p = new Patient(rset.getInt("id"),rset.getString("nameinitials"),
                         rset.getString("currentlocation"),rset.getString("sex"),
-                        rset.getTimestamp("arrivaldatetime"),rset.getString("initialdiagnosis"),
+                        rset.getTimestamp("arrivaldatetime").toLocalDateTime(),rset.getString("initialdiagnosis"),
                         rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),
-                        rset.getString("nextdestination"),rset.getTimestamp("estimatedtimeofnext"),
+                        rset.getString("nextdestination"),rset.getTimestamp("estimatedtimeofnext").toLocalDateTime(),
                         rset.getBoolean("ttasignedoff"), rset.getBoolean("suitablefordischargelounge"),
                         rset.getString("transferrequeststatus"),rset.getBoolean("deceased"));
                 jsonStrings.add(gson.toJson(p));
