@@ -61,7 +61,7 @@ public class DatabaseController {
                         rset.getString("currentlocation"),rset.getString("sex"),
                         rset.getTimestamp("arrivaldatetime",Calendar.getInstance()).toLocalDateTime(),rset.getString("initialdiagnosis"),
                         rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),
-                        rset.getString("nextdestination"),rset.getTimestamp("estimatedtimeofnext",Calendar.getInstance()).toLocalDateTime(),
+                        rset.getString("nextdestination"),rset.getTimestamp("estimatedatetimeofnext",Calendar.getInstance()).toLocalDateTime(),
                         rset.getBoolean("ttasignedoff"), rset.getBoolean("suitablefordischargelounge"),
                         rset.getString("transferrequeststatus"),rset.getBoolean("deceased"));
                 jsonStrings.add(gson.toJson(p));
