@@ -21,7 +21,7 @@ public class DatabaseController {
 
     public void executeInsertPatient(Patient p) {
         try {
-            String sqlQuery = "INSERT INTO patients (nameinitials,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
+            String sqlQuery = "insert into patients (nameinitials,sex,initialdiagnosis,needssideroom) values ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();

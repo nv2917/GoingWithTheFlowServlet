@@ -1,6 +1,4 @@
 import com.google.gson.Gson;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/home"},loadOnStartup = 1)
@@ -50,10 +47,12 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        resp.setContentType("application/html");
+        resp.getWriter().write("Executed POST request successfully");
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try{
             db.connect();
             db.executeDelete(req.getParameter("table"),req.getParameter("where"));
@@ -61,6 +60,8 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        resp.setContentType("application/html");
+        resp.getWriter().write("Executed DELETE request successfully");
     }
 
 }
