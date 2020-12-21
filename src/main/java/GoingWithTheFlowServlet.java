@@ -42,8 +42,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        resp.setContentType("application/html");
-        Gson gson = new Gson();
+         Gson gson = new Gson();
         try {
             db.connect();
             db.executeInsertPatient(gson.fromJson(reqBody,Patient.class));
@@ -54,13 +53,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        resp.setContentType("application/html");
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         try{
             db.connect();
-            db.executeDelete(reqBody);
-            resp.getWriter().write("Thank you client!! \nYour request:\n"+reqBody+"\nhas been executed successfully!");
+            db.executeDelete(req.getParameter("table"),req.getParameter("where"));
             db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

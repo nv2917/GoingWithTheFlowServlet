@@ -1,8 +1,5 @@
 import com.google.gson.Gson;
 import java.sql.*;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -24,18 +21,18 @@ public class DatabaseController {
 
     public void executeInsertPatient(Patient p) {
         try {
-            String sqlQuery = "INSERT INTO patients (nameinitials,sex,initialdiagnosis,needssideroom) values ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
+            String sqlQuery = "INSERT INTO patients (nameinitials,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
         } catch (Exception e) {e.printStackTrace(); }
-
     }
 
-    public void executeDelete(String command) {
+    public void executeDelete(String table, String criteria) {
         try {
+            String sqlQuery = "DELETE FROM " + table + " WHERE " + criteria + ";";
             Statement s = conn.createStatement();
-            s.execute(command);
+            s.execute(sqlQuery);
             s.close();
         } catch (Exception e) {e.printStackTrace();}
     }
@@ -49,11 +46,11 @@ public class DatabaseController {
        4)returns arraylist of JSON strings
      */
 
-    public ArrayList<String> executeSelect(String fields, String table, String criteria) {
+    public ArrayList<String> executeSelect(String fields,String table,String criteria) {
         ArrayList<String> jsonStrings = new ArrayList<>();
         Gson gson = new Gson();
         try {
-            String sqlQr = "select " + fields + " from " + table + " where " + criteria + ";";
+            String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + criteria + ";";
             Statement s = conn.createStatement();
             ResultSet rset = s.executeQuery(sqlQr);
             while (rset.next()) {
