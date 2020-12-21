@@ -21,16 +21,16 @@ public class DatabaseController {
 
     public void executeInsertPatient(Patient p) {
         try {
-            String sqlQuery = "insert into patients (nameinitials,sex,initialdiagnosis,needssideroom) values ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
+            String sqlQuery = "INSERT INTO patients (nameinitials,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
         } catch (Exception e) {e.printStackTrace(); }
     }
 
-    public void executeDelete(String table, String criteria) {
+    public void executeDelete(String table, String condition) {
         try {
-            String sqlQuery = "DELETE FROM " + table + " WHERE " + criteria + ";";
+            String sqlQuery = "DELETE FROM " + table + " WHERE " + condition + ";";
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
@@ -46,11 +46,11 @@ public class DatabaseController {
        4)returns arraylist of JSON strings
      */
 
-    public ArrayList<String> executeSelect(String fields,String table,String criteria) {
+    public ArrayList<String> executeSelect(String fields,String table,String condition) {
         ArrayList<String> jsonStrings = new ArrayList<>();
         Gson gson = new Gson();
         try {
-            String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + criteria + ";";
+            String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + ";";
             Statement s = conn.createStatement();
             ResultSet rset = s.executeQuery(sqlQr);
             while (rset.next()) {
@@ -75,5 +75,13 @@ public class DatabaseController {
     }
 
 
+    public void executeEdit(String table, String change, String condition) {
+        try {
+            String sqlQuery = "UPDATE " + table + " SET " + change + " WHERE " + condition + ";";
+            Statement s = conn.createStatement();
+            s.execute(sqlQuery);
+            s.close();
+        } catch (Exception e) {e.printStackTrace();}
+    }
 }
 

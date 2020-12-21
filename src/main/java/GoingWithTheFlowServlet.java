@@ -1,4 +1,6 @@
 import com.google.gson.Gson;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +28,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         Gson gson = new Gson();
         try {
             db.connect();
-            ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("where"));
+            ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("condition"));
             db.disconnect();
             resp.setContentType("application/json");
             resp.getWriter().println(gson.toJson(jsonStrings));
@@ -55,7 +57,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try{
             db.connect();
-            db.executeDelete(req.getParameter("table"),req.getParameter("where"));
+            db.executeDelete(req.getParameter("table"),req.getParameter("condition"));
             db.disconnect();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -64,4 +66,16 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         resp.getWriter().write("Executed DELETE request successfully");
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try{
+            db.connect();
+            db.executeEdit(req.getParameter("table"),req.getParameter("change"),req.getParameter("condition"));
+            db.disconnect();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        resp.setContentType("application/html");
+        resp.getWriter().write("Executed PUT request successfully");
+    }
 }
