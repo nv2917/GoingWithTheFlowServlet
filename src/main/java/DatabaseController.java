@@ -53,16 +53,33 @@ public class DatabaseController {
             String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + ";";
             Statement s = conn.createStatement();
             ResultSet rset = s.executeQuery(sqlQr);
-            while (rset.next()) {
-                 Patient p = new Patient(rset.getInt("id"),rset.getString("nameinitials"),
-                        rset.getInt("currentwardid"),rset.getInt("currentbedid"),rset.getString("sex"),
-                        rset.getTimestamp("arrivaldatetime",Calendar.getInstance()).toLocalDateTime(),rset.getString("initialdiagnosis"),
-                        rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),
-                        rset.getString("nextdestination"),rset.getTimestamp("estimatedatetimeofnext",Calendar.getInstance()).toLocalDateTime(),
-                        rset.getBoolean("ttasignedoff"), rset.getBoolean("suitablefordischargelounge"),
-                        rset.getString("transferrequeststatus"),rset.getBoolean("deceased"));
-                jsonStrings.add(gson.toJson(p));
+
+            if(table.equals("patients")) {
+                while (rset.next()) {
+                    Patient p = new Patient(rset.getInt("id"), rset.getString("nameinitials"),
+                            rset.getInt("currentwardid"), rset.getInt("currentbedid"), rset.getString("sex"),
+                            rset.getTimestamp("arrivaldatetime", Calendar.getInstance()).toLocalDateTime(), rset.getString("initialdiagnosis"),
+                            rset.getBoolean("needssideroom"), rset.getBoolean("acceptedbymedicine"),
+                            rset.getString("nextdestination"), rset.getTimestamp("estimatedatetimeofnext", Calendar.getInstance()).toLocalDateTime(),
+                            rset.getBoolean("ttasignedoff"), rset.getBoolean("suitablefordischargelounge"),
+                            rset.getString("transferrequeststatus"), rset.getBoolean("deceased"));
+                    jsonStrings.add(gson.toJson(p));
+                }
             }
+            else if(table.equals("beds")) {
+                while ((rset.next())) {
+                    Bed b = new Bed(rset.getInt("bedid"),rset.getInt("wardid"),rset.getString("status"),
+                            rset.getString("forsex"),rset.getBoolean("hassideroom"));
+                    jsonStrings.add(gson.toJson(b));
+                }
+            }
+            else if(table.equals("wards")){
+                while(rset.next()){
+                    Ward w = new Ward(rset.getInt("wardid"),rset.getString("wardname"));
+                    jsonStrings.add(gson.toJson(w));
+                }
+            }
+
             rset.close();
             s.close();
         } catch (Exception e) {e.printStackTrace();}
