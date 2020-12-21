@@ -55,7 +55,7 @@ public class DatabaseController {
             ResultSet rset = s.executeQuery(sqlQr);
             while (rset.next()) {
                  Patient p = new Patient(rset.getInt("id"),rset.getString("nameinitials"),
-                        rset.getString("currentlocation"),rset.getString("sex"),
+                        rset.getInt("currentwardid"),rset.getInt("currentbedid"),rset.getString("sex"),
                         rset.getTimestamp("arrivaldatetime",Calendar.getInstance()).toLocalDateTime(),rset.getString("initialdiagnosis"),
                         rset.getBoolean("needssideroom"),rset.getBoolean("acceptedbymedicine"),
                         rset.getString("nextdestination"),rset.getTimestamp("estimatedatetimeofnext",Calendar.getInstance()).toLocalDateTime(),
