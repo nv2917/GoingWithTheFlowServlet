@@ -21,7 +21,7 @@ public class DatabaseController {
 
     public void executeInsertPatient(Patient p) {
         try {
-            String sqlQuery = "INSERT INTO patients (nameinitials,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getNameInitials()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
+            String sqlQuery = "INSERT INTO patients (patientid,,dateofbirth,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getPatientId()+"','"+p.getDateOfBirth()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
@@ -56,7 +56,7 @@ public class DatabaseController {
 
             if(table.equals("patients")) {
                 while (rset.next()) {
-                    Patient p = new Patient(rset.getInt("id"), rset.getString("nameinitials"),
+                    Patient p = new Patient(rset.getInt("id"), rset.getString("patientid"),rset.getDate("dateofbirth").toLocalDate(),
                             rset.getInt("currentwardid"), rset.getInt("currentbedid"), rset.getString("sex"),
                             rset.getTimestamp("arrivaldatetime", Calendar.getInstance()).toLocalDateTime(), rset.getString("initialdiagnosis"),
                             rset.getBoolean("needssideroom"), rset.getBoolean("acceptedbymedicine"),
