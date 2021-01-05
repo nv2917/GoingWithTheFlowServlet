@@ -46,15 +46,15 @@ public class DatabaseController {
        4)returns arraylist of JSON strings
      */
 
-    public ArrayList<String> executeSelect(String fields,String table,String condition) {
+    public ArrayList<String> executeSelect(String fields,String table,String condition) throws SQLException {
         ArrayList<String> jsonStrings = new ArrayList<>();
         Gson gson = new Gson();
+        Statement s = conn.createStatement();
+        ResultSet rset = null;
         try {
-            String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + ";";
-            Statement s = conn.createStatement();
-            ResultSet rset = s.executeQuery(sqlQr);
-
             if(table.equals("patients")) {
+                String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + " ORDER BY id ASC;";
+                rset = s.executeQuery(sqlQr);
                 while (rset.next()) {
                     Patient p = new Patient(rset.getInt("id"), rset.getString("patientid"),rset.getDate("dateofbirth").toLocalDate(),
                             rset.getInt("currentwardid"), rset.getInt("currentbedid"), rset.getString("sex"),
@@ -66,14 +66,20 @@ public class DatabaseController {
                     jsonStrings.add(gson.toJson(p));
                 }
             }
+            
             else if(table.equals("beds")) {
+                String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + " ORDER BY bedid ASC;";
+                rset = s.executeQuery(sqlQr);
                 while ((rset.next())) {
                     Bed b = new Bed(rset.getInt("bedid"),rset.getInt("wardid"),rset.getString("status"),
                             rset.getString("forsex"),rset.getBoolean("hassideroom"));
                     jsonStrings.add(gson.toJson(b));
                 }
             }
+            
             else if(table.equals("wards")){
+                String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + " ORDER BY wardid ASC ;";
+                rset = s.executeQuery(sqlQr);
                 while(rset.next()){
                     Ward w = new Ward(rset.getInt("wardid"),rset.getString("wardname"));
                     jsonStrings.add(gson.toJson(w));
