@@ -49,7 +49,6 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     @Override
@@ -61,8 +60,6 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        resp.setContentType("application/html");
-        resp.getWriter().write("Executed DELETE request successfully");
     }
 
     @Override
@@ -74,7 +71,5 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        resp.setContentType("application/html");
-        resp.getWriter().write("Executed PUT request successfully");
     }
 }
