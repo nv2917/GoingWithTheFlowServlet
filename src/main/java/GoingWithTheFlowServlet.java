@@ -48,11 +48,11 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         }
 
         else if(req.getServletPath().equals("/log")) {
-            FileInputStream fstream = new FileInputStream("MyLogFile.log");
+            FileInputStream fstream = new FileInputStream("GoingWithTheFlowServletLogFile.log");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fstream));
             String inputLine;
             while((inputLine = bufferedReader.readLine()) != null) {
-                resp.getWriter().write(inputLine);
+                resp.getWriter().write(inputLine+"\n");
             }
             bufferedReader.close();
             fstream.close();
