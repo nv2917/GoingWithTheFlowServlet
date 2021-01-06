@@ -41,7 +41,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
                 db.disconnect();
                 resp.setContentType("application/json");
                 resp.getWriter().println(gson.toJson(jsonStrings));
-                log.info("doGet requested")
+                log.info("doGet requested");
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
