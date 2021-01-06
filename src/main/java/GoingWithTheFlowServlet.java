@@ -48,6 +48,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         }
 
         else if(req.getServletPath().equals("/log")) {
+            resp.setContentType("text/plain");
             FileInputStream fstream = new FileInputStream("GoingWithTheFlowServletLogFile.log");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fstream));
             String inputLine;
