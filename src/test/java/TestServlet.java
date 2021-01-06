@@ -12,7 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
 
@@ -48,6 +53,7 @@ public class TestServlet {
         GoingWithTheFlowServlet myServlet = new GoingWithTheFlowServlet();
         myServlet.doGet(request, response);
         String output = stringWriter.getBuffer().toString();
+
         Gson gson = new Gson();
         ArrayList<String> jsonStrings = gson.fromJson(output,ArrayList.class);
         ArrayList<Patient> patients = new ArrayList<Patient>();
@@ -56,7 +62,32 @@ public class TestServlet {
             patients.add(p);
         }
         Assert.assertEquals(patients.get(0).getPatientId(),"9999999999");
-
+        Assert.assertEquals(1,1);
     }
+    /*
+    @Test
+    public void testDoPost() throws IOException, ServletException, SQLException {
+        Patient p = new Patient("1234567890","M",LocalDate.of(2020,1,2),"testDoPost",false);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(p);
+
+        when(request.getReader().lines().collect(Collectors.joining())).thenReturn(jsonString);
+
+        GoingWithTheFlowServlet myServlet = new GoingWithTheFlowServlet();
+        myServlet.doPost(request, response);
+        Assert.assertEquals(1,1);
+
+
+        DatabaseController db = new DatabaseController();
+        db.connect();
+        ArrayList<String> jsonStrings = db.executeSelect("*","patients","patientid='"+p.getPatientId()+"'");
+        db.disconnect();
+        ArrayList<Patient> patients = new ArrayList<Patient>();
+        for(String s:jsonStrings) {
+            Patient p2 = gson.fromJson(s, Patient.class);
+            patients.add(p2);
+        }
+        Assert.assertEquals(patients.get(0).getPatientId(),p.getPatientId());
+    }*/
 }
 

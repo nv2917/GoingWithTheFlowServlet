@@ -19,33 +19,13 @@ public class DatabaseController {
         conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
     }
 
-    public void executeInsertPatient(Patient p) {
-        try {
-            String sqlQuery = "INSERT INTO patients (patientid,dateofbirth,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getPatientId()+"','"+p.getDateOfBirth()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
-            Statement s = conn.createStatement();
-            s.execute(sqlQuery);
-            s.close();
-        } catch (Exception e) {e.printStackTrace(); }
-    }
-
-    public void executeDelete(String table, String condition) {
-        try {
-            String sqlQuery = "DELETE FROM " + table + " WHERE " + condition + ";";
-            Statement s = conn.createStatement();
-            s.execute(sqlQuery);
-            s.close();
-        } catch (Exception e) {e.printStackTrace();}
-    }
-
-    /* 1)Creates an SQL SELECT query as a string to which it passes the search parameters (fields,table,where)
+    /* 1)Creates an SQL SELECT query to which it passes the search parameters (fields,table,condition)
        2)Executes the query
        3)For each entry obtained from table:
-            a.  creates a Patient object by passing the respective fields
+            a.  creates a Patient/Bed/Ward object by passing the respective fields
                 to the respective attributes (through the constructor)
-            b.  codes Patient object using JSON and adds string to arraylist of JSON strings
-       4)returns arraylist of JSON strings
-     */
-
+            b.  codes Patient/Bed/Ward object using JSON and adds string to arraylist of JSON strings
+       4)returns arraylist of JSON strings*/
     public ArrayList<String> executeSelect(String fields,String table,String condition) throws SQLException {
         ArrayList<String> jsonStrings = new ArrayList<>();
         Gson gson = new Gson();
@@ -66,7 +46,7 @@ public class DatabaseController {
                     jsonStrings.add(gson.toJson(p));
                 }
             }
-            
+
             else if(table.equals("beds")) {
                 String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + " ORDER BY bedid ASC;";
                 rset = s.executeQuery(sqlQr);
@@ -76,7 +56,7 @@ public class DatabaseController {
                     jsonStrings.add(gson.toJson(b));
                 }
             }
-            
+
             else if(table.equals("wards")){
                 String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + " ORDER BY wardid ASC ;";
                 rset = s.executeQuery(sqlQr);
@@ -92,12 +72,19 @@ public class DatabaseController {
         return jsonStrings;
     }
 
-    /*closes the connection to the Heroku database*/
-    public void disconnect() throws SQLException {
-        conn.close();
+    /* 1)Creates an SQL INSERT INTO patients query which passes the Patient's object attributes to the respective fields
+       2)Executes the query*/
+    public void executeInsertPatient(Patient p) {
+        try {
+            String sqlQuery = "INSERT INTO patients (patientid,dateofbirth,sex,initialdiagnosis,needssideroom) VALUES ('"+p.getPatientId()+"','"+p.getDateOfBirth()+"','"+p.getSex()+"','"+p.getInitialDiagnosis()+"','"+p.getNeedsSideRoom()+"');";
+            Statement s = conn.createStatement();
+            s.execute(sqlQuery);
+            s.close();
+        } catch (Exception e) {e.printStackTrace(); }
     }
 
-
+    /* 1)Creates an SQL UPDATE query to which it passes the parameters (table,change,condition)
+       2)Executes the query*/
     public void executeEdit(String table, String change, String condition) {
         try {
             String sqlQuery = "UPDATE " + table + " SET " + change + " WHERE " + condition + ";";
@@ -106,5 +93,22 @@ public class DatabaseController {
             s.close();
         } catch (Exception e) {e.printStackTrace();}
     }
+
+    /* 1)Creates an SQL DELETE query to which it passes the search parameters (table,condition)
+       2)Executes the query*/
+    public void executeDelete(String table, String condition) {
+        try {
+            String sqlQuery = "DELETE FROM " + table + " WHERE " + condition + ";";
+            Statement s = conn.createStatement();
+            s.execute(sqlQuery);
+            s.close();
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+    /*closes the connection to the Heroku database*/
+    public void disconnect() throws SQLException {
+        conn.close();
+    }
+
 }
 
