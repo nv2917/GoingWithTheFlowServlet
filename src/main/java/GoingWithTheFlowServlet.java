@@ -48,12 +48,13 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         }
 
         else if(req.getServletPath().equals("/log")) {
-            resp.setContentType("text/plain");
+            resp.setContentType("text/html");
             FileInputStream fstream = new FileInputStream("GoingWithTheFlowServletLogFile.log");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fstream));
             String inputLine;
             while((inputLine = bufferedReader.readLine()) != null) {
-                resp.getWriter().write(inputLine+"\n");
+                if(inputLine.contains("INFO"))
+                resp.getWriter().write("<p style='color:green'>"+inputLine+"</p>"+"\n");
             }
             bufferedReader.close();
             fstream.close();
