@@ -41,7 +41,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String reqBody=req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-         Gson gson = new Gson();
+        Gson gson = new Gson();
         try {
             db.connect();
             db.executeInsertPatient(gson.fromJson(reqBody,Patient.class));
@@ -49,8 +49,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        resp.setContentType("application/html");
-        resp.getWriter().write("Executed POST request successfully");
+
     }
 
     @Override
