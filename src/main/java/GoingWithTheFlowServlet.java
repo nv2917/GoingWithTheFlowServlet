@@ -70,9 +70,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         Gson gson = new Gson();
         try {
             db.connect();
-            db.executeInsertPatient(gson.fromJson(reqBody,Patient.class));
+            Patient p = gson.fromJson(reqBody,Patient.class);
+            db.executeInsertPatient(p);
             db.disconnect();
-            log.info("doPost requested");
+            log.info("doPost requested: Added patient "+p.getPatientId()+".");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

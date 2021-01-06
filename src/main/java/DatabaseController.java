@@ -61,7 +61,7 @@ public class DatabaseController {
                 String sqlQr = "SELECT " + fields + " FROM " + table + " WHERE " + condition + " ORDER BY wardid ASC ;";
                 rset = s.executeQuery(sqlQr);
                 while(rset.next()){
-                    Ward w = new Ward(rset.getInt("wardid"),rset.getString("wardname"));
+                    Ward w = new Ward(rset.getInt("wardid"),rset.getString("wardname"),rset.getString("wardtype"));
                     jsonStrings.add(gson.toJson(w));
                 }
             }
