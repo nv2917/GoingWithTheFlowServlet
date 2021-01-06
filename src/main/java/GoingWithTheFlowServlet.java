@@ -5,16 +5,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.swing.plaf.basic.BasicButtonUI;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@WebServlet(urlPatterns = {"/home"},loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/home","/log"},loadOnStartup = 1)
 public class GoingWithTheFlowServlet extends HttpServlet {
 
     DatabaseController db;
@@ -34,16 +33,29 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         5)code the arraylist of strings using JSON and responds to the client by writing the JSON string in the response body*/
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Gson gson = new Gson();
-        try {
-            db.connect();
-            ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("condition"));
-            db.disconnect();
-            resp.setContentType("application/json");
-            resp.getWriter().println(gson.toJson(jsonStrings));
+        if (req.getServletPath().equals("/home")) {
+            Gson gson = new Gson();
+            try {
+                db.connect();
+                ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("condition"));
+                db.disconnect();
+                resp.setContentType("application/json");
+                resp.getWriter().println(gson.toJson(jsonStrings));
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        else if(req.getServletPath().equals("/log")) {
+            FileInputStream fstream = new FileInputStream("MyLogFile.log");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fstream));
+            String inputLine;
+            while((inputLine = bufferedReader.readLine()) != null) {
+                resp.getWriter().write(inputLine);
+            }
+            bufferedReader.close();
+            fstream.close();
         }
     }
 

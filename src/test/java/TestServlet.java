@@ -46,6 +46,7 @@ public class TestServlet {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(printWriter);
+        when(request.getServletPath()).thenReturn("/home");
         when(request.getParameter("fields")).thenReturn("*");
         when(request.getParameter("table")).thenReturn("patients");
         when(request.getParameter("condition")).thenReturn("id="+1);
