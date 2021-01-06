@@ -41,6 +41,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
                 db.disconnect();
                 resp.setContentType("application/json");
                 resp.getWriter().println(gson.toJson(jsonStrings));
+                log.info("doGet requested")
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -55,9 +56,9 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             while((inputLine = bufferedReader.readLine()) != null) {
                 if(inputLine.contains("INFO")) {resp.getWriter().write("<p style='color:green'>"+inputLine+"</p>"+"\n");}
                 else{resp.getWriter().write(inputLine+"\n");}
+            }
             bufferedReader.close();
             fstream.close();
-            }
         }
     }
 
