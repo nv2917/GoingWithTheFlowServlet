@@ -53,11 +53,11 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fstream));
             String inputLine;
             while((inputLine = bufferedReader.readLine()) != null) {
-                if(inputLine.contains("INFO"))
-                resp.getWriter().write("<p style='color:green'>"+inputLine+"</p>"+"\n");
-            }
+                if(inputLine.contains("INFO")) {resp.getWriter().write("<p style='color:green'>"+inputLine+"</p>"+"\n");}
+                else{resp.getWriter().write(inputLine+"\n");}
             bufferedReader.close();
             fstream.close();
+            }
         }
     }
 
