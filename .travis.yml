@@ -12,6 +12,7 @@ cache:
     - $HOME/.gradle/wrapper/
 deploy:
   provider: heroku
-  api_key: 7f17abf3-2643-4c7d-8bd4-282f8e40c22e
+  api_key:
+    secure: O6dFDHXsSE70JNW4X21YF8srPGmE8KAO8gkXwgthmBkeP8itdkaG6b5SKtO3gx5FyeWkMM6B2bmBtjLyuSrxoCbu6N+f2gJr3pfyGCAlrTjMCfoRUSh+0Ce0gfXlD8EMIi861BDgSll6veZS6SREaijNi4KaO66a7jIQ83lR2R/uDnL7iCFhkIL1Ypt47VDzbbgKiUh4T4//ODbJL+j4vAy+oJq4eLUAet1PHnyMfmkPQzHQeQudNBOTmHi/vyxk37jTclihU7nrNGDzeYhL1JxC8NF5731Ba3j8Q6bc7sP9F+AQmiemOl//RqxsAjRyf4ZNIPfIMuvQTV2LdKNLy7Y1qsLiMicm9eSYkwSaVnoQgT2gTVCdkF9Mqs+8WpmaHtfvl7q6f5VIEdKC6NIbWb/ZAaxsuzSnJwhEECruJID3ot47d42xM7o75wQaHglvADUtulxot06TA5bJvCS7JlXOPTH+8XWibBvE/pLFzv3EyvCcOYMOtMsA6ylp+AqIpTK1ZUdLU8tvjFhfO8W/V53Flzn7hgqDX8bVDSmeA0nhyDVO04Dl6PzFeMr2xGXTGjegjk95O9w2DagkaRsFc1s+nHG24i36o0Zvtu2YcNfuo+jprubm5iQAjUAqQmnznrEKUjGDFb1K6azfahDyS3qqGkK56s16ScgwUkMzshc=
   app: goingwiththeflowservlet
   skip_cleanup: true
