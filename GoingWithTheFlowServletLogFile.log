@@ -1,2 +1,2 @@
-Jan 10, 2021 11:59:25 AM GoingWithTheFlowServlet doPost
-INFO: doPost requested: Added patient 9999999998.
+Jan 10, 2021 1:57:07 PM GoingWithTheFlowServlet doPost
+INFO: doPost requested: Added patient with patient ID: 9999999998.
