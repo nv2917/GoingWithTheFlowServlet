@@ -25,7 +25,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
     }
 
-    /*Upon receiving a doGet request from the client app it uses the methods of the Databases controller object db to:
+    /*Upon receiving a doGet request for the path "/home" from the client app it uses the methods of the Databases controller object db to:
         1)connect to the database
         2)execute a database search based on the parameters provided as key-value pairs at the end of the URL
         3)create an arraylist of strings containing JSON strings (coding Patient objects)
@@ -47,7 +47,8 @@ public class GoingWithTheFlowServlet extends HttpServlet {
                 log.warning("Exception thrown:"+throwables.getStackTrace().toString());
             }
         }
-
+    /*Upon receiving a doGet request for the path "/log" i.e. by browsing to that URL, the contents
+      of the Log file are read in and printed on the page for diagnostic purposes */
         else if(req.getServletPath().equals("/log")) {
             resp.setContentType("text/html");
             FileInputStream fstream = new FileInputStream("GoingWithTheFlowServletLogFile.log");

@@ -17,7 +17,7 @@ public class DatabaseController {
         try {
             // Registers the driver
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(dbURL, "kvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
+            conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
         } catch (Exception e) {
             log.severe("Unsuccessful connection to Database");
             log.severe("Exception thrown:"+e.toString());
