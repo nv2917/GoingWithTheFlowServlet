@@ -2,10 +2,12 @@ import com.google.gson.Gson;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 public class DatabaseController {
 
     private Connection conn;
+    private static final Logger log= Logger.getLogger(DatabaseController.class.getName());
 
     public DatabaseController() { }
 
@@ -15,8 +17,11 @@ public class DatabaseController {
         try {
             // Registers the driver
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
-        } catch (Exception e) {e.printStackTrace(); }
+            conn = DriverManager.getConnection(dbURL, "kvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
+        } catch (Exception e) {
+            log.severe("Unsuccessful connection to Database");
+            log.severe("Exception thrown:"+e.toString());
+        }
     }
 
     /* 1)Creates an SQL SELECT query to which it passes the search parameters (fields,table,condition)
@@ -68,7 +73,11 @@ public class DatabaseController {
 
             rset.close();
             s.close();
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            log.warning("Unsuccessful SQL SELECT query execution");
+            log.warning("Exception thrown:"+e.toString());
+
+        }
         return jsonStrings;
     }
 
@@ -80,7 +89,10 @@ public class DatabaseController {
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
-        } catch (Exception e) {e.printStackTrace(); }
+        } catch (Exception e) {
+            log.warning("Unsuccessful SQL INSERT query execution");
+            log.warning("Exception thrown:"+e.toString());
+        }
     }
 
     /* 1)Creates an SQL UPDATE query to which it passes the parameters (table,change,condition)
@@ -91,7 +103,10 @@ public class DatabaseController {
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            log.warning("Unsuccessful SQL UPDATE query execution");
+            log.warning("Exception thrown:"+e.toString());
+        }
     }
 
     /* 1)Creates an SQL DELETE query to which it passes the search parameters (table,condition)
@@ -102,7 +117,10 @@ public class DatabaseController {
             Statement s = conn.createStatement();
             s.execute(sqlQuery);
             s.close();
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            log.warning("Unsuccessful SQL DELETE query execution");
+            log.warning("Exception thrown:"+e.toString());
+        }
     }
 
     /*closes the connection to the Heroku database*/

@@ -42,9 +42,9 @@ public class GoingWithTheFlowServlet extends HttpServlet {
                 db.disconnect();
                 resp.setContentType("application/json");
                 resp.getWriter().println(gson.toJson(jsonStrings));
-                log.info(" doGet responded with "+jsonStrings.size()+" entries from "+req.getParameter("table")+" table.");
+                log.info(" doGet responded with "+jsonStrings.size()+" entry/ies from "+req.getParameter("table")+" table.");
             } catch (SQLException throwables) {
-                log.warning(throwables.getStackTrace().toString());
+                log.warning("Exception thrown:"+throwables.getStackTrace().toString());
             }
         }
 
@@ -80,7 +80,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             log.info("doPost requested: Added patient with patient ID: "+p.getPatientId()+".");
             db.disconnect();
         } catch (SQLException throwables) {
-            log.warning(throwables.getStackTrace().toString());
+            log.warning("Exception thrown:"+throwables.getStackTrace().toString());
         }
     }
 
@@ -96,7 +96,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             log.info("doPut requested: edited table "+req.getParameter("table")+" entry/ies where "+req.getParameter("condition")+" to "+req.getParameter("change")+".");
             db.disconnect();
         } catch (SQLException throwables) {
-            log.warning(throwables.getStackTrace().toString());
+            log.warning("Exception thrown:"+throwables.getStackTrace().toString());
         }
     }
 
@@ -112,7 +112,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             log.info("doDelete requested: deleted table "+req.getParameter("table")+" entry where "+req.getParameter("condition")+".");
             db.disconnect();
         } catch (SQLException throwables) {
-            log.warning(throwables.getStackTrace().toString());
+            log.warning("Exception thrown:"+throwables.getStackTrace().toString());
         }
     }
 
