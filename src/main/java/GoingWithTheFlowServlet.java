@@ -38,12 +38,13 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             try {
                 db.connect();
                 ArrayList<String> jsonStrings = db.executeSelect(req.getParameter("fields"),req.getParameter("table"),req.getParameter("condition"));
+                log.info(" doGet requested: fields: "+req.getParameter("fields")+", table: "+req.getParameter("table")+", condition: "+req.getParameter("condition")+".");
                 db.disconnect();
                 resp.setContentType("application/json");
                 resp.getWriter().println(gson.toJson(jsonStrings));
-                log.info(" requested: fields: "+req.getParameter("fields")+", table: "+req.getParameter("table")+", condition: "+req.getParameter("condition"));
+                log.info(" doGet responded with "+jsonStrings.size()+" entries from "+req.getParameter("table")+" table.");
             } catch (SQLException throwables) {
-                throwables.getStackTrace().toString();
+                log.warning(throwables.getStackTrace().toString());
             }
         }
 
@@ -54,7 +55,9 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             String inputLine;
             while((inputLine = bufferedReader.readLine()) != null) {
                 if(inputLine.contains("INFO")) {resp.getWriter().write("<p style='color:green'>"+inputLine+"</p>");}
-                else{resp.getWriter().write(inputLine+"\n");}
+                else if(inputLine.contains("WARNING")) {resp.getWriter().write("<p style='color:orange'>"+inputLine+"</p>");}
+                else if(inputLine.contains("SEVERE")) {resp.getWriter().write("<p style='color:red'>"+inputLine+"</p>");}
+                else{resp.getWriter().write(inputLine);}
             }
             bufferedReader.close();
             fstream.close();
@@ -74,10 +77,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
             db.connect();
             Patient p = gson.fromJson(reqBody,Patient.class);
             db.executeInsertPatient(p);
+            log.info("doPost requested: Added patient with patient ID: "+p.getPatientId()+".");
             db.disconnect();
-            log.info("doPost requested: Added patient "+p.getPatientId()+".");
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.warning(throwables.getStackTrace().toString());
         }
     }
 
@@ -90,9 +93,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         try{
             db.connect();
             db.executeEdit(req.getParameter("table"),req.getParameter("change"),req.getParameter("condition"));
+            log.info("doPut requested: edited table "+req.getParameter("table")+" entry/ies where "+req.getParameter("condition")+" to "+req.getParameter("change")+".");
             db.disconnect();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.warning(throwables.getStackTrace().toString());
         }
     }
 
@@ -105,9 +109,10 @@ public class GoingWithTheFlowServlet extends HttpServlet {
         try{
             db.connect();
             db.executeDelete(req.getParameter("table"),req.getParameter("condition"));
+            log.info("doDelete requested: deleted table "+req.getParameter("table")+" entry where "+req.getParameter("condition")+".");
             db.disconnect();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.warning(throwables.getStackTrace().toString());
         }
     }
 
