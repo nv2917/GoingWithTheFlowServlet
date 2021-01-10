@@ -15,8 +15,8 @@ public class DatabaseController {
         try {
             // Registers the driver
             Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
         } catch (Exception e) {e.printStackTrace(); }
-        conn = DriverManager.getConnection(dbURL, "xkvujomuqpzjpz", "9fc3f2d5f1941a2d2d41b6bac2cf21e30f30f77cfc23c958f18916fba11d9398");
     }
 
     /* 1)Creates an SQL SELECT query to which it passes the search parameters (fields,table,condition)
