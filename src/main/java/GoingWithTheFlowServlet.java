@@ -67,7 +67,7 @@ public class GoingWithTheFlowServlet extends HttpServlet {
 
     /*Upon receiving a doPost request from the client app it uses the methods of the Databases controller object db to:
        1)connect to the database
-       2)decode the body of the request from json string to the patient object.
+       2)decode the body of the request from JSON string to the patient object.
        3)add the patient to the database by passing its attributes to the respective fields
        4)disconnect from database*/
     @Override

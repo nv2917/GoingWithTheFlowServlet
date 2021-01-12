@@ -26,7 +26,7 @@ public class DatabaseController {
 
     /* 1)Creates an SQL SELECT query to which it passes the search parameters (fields,table,condition)
        2)Executes the query
-       3)For each entry obtained from table:
+       3)For each entry obtained (in ascending ID order) from table:
             a.  creates a Patient/Bed/Ward object by passing the respective fields
                 to the respective attributes (through the constructor)
             b.  codes Patient/Bed/Ward object using JSON and adds string to arraylist of JSON strings
